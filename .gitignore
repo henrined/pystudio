@@ -1,0 +1,36 @@
+# PyStudio signing keys - NEVER commit private keys
+.signing/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Android/Java
+*.apk
+*.ap_
+*.dex
+*.class
+bin/
+gen/
+out/
+build/
+local.properties
+.gradle/
+.idea/
+*.iml
+
+# C++/CMake
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+core/build/
+android/app/build/
+android/app/.cxx/
+
+# Misc
+.DS_Store
+*.log
