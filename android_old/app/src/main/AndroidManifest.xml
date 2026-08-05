@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pystudio">
+
+    <application>
+        <!-- Service du Runner s'exécutant dans un processus isolé -->
+        <service
+            android:name=".runner.RunnerService"
+            android:isolatedProcess="true"
+            android:exported="false" />
+        <service
+            android:name=".debug.DebugService"
+            android:exported="false" />
+        <service
+            android:name=".debug.LldbServerService"
+            android:isolatedProcess="true"
+            android:exported="false" />
+        <service
+            android:name=".lsp.LspService"
+            android:isolatedProcess="true"
+            android:exported="false" />
+    </application>
+
+</manifest>

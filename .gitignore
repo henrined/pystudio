@@ -1,36 +1,36 @@
-# PyStudio signing keys - NEVER commit private keys
-.signing/
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
-# Node
+# dependencies
 node_modules/
-npm-debug.log
-yarn-error.log
 
-# Android/Java
-*.apk
-*.ap_
-*.dex
-*.class
-bin/
-gen/
-out/
-build/
-local.properties
-.gradle/
-.idea/
-*.iml
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
 
-# C++/CMake
-CMakeCache.txt
-CMakeFiles/
-Makefile
-cmake_install.cmake
-install_manifest.txt
-compile_commands.json
-core/build/
-android/app/build/
-android/app/.cxx/
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
 
-# Misc
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
 .DS_Store
-*.log
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
