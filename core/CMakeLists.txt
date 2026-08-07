@@ -63,7 +63,11 @@ option(PYSTUDIO_MODULE_MLRUNTIME    "Build mlruntime module"        ON)
 
 # ─── Modules optionnels ───────────────────────────────────────────────────────
 if(PYSTUDIO_MODULE_PYEMBED)
-  add_subdirectory(modules/pyembed)
+  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../runtimes")
+    add_subdirectory(modules/pyembed)
+  else()
+    message(STATUS "[pyembed] Python runtimes directory not present, skipping pyembed build")
+  endif()
 endif()
 
 if(PYSTUDIO_MODULE_CXXTOOLCHAIN)

@@ -7,9 +7,12 @@ add_library(gitengine SHARED
 target_include_directories(gitengine PUBLIC include)
 target_link_libraries(gitengine pystudio_core)
 
-# Obligatoire: lier libgit2
-find_package(libgit2 REQUIRED)
-target_link_libraries(gitengine git2)
+# Optionnel: lier libgit2 si disponible
+find_package(libgit2 QUIET)
+if(libgit2_FOUND)
+    target_link_libraries(gitengine git2)
+    target_compile_definitions(gitengine PUBLIC HAS_LIBGIT2)
+endif()
 
 install(TARGETS gitengine
     LIBRARY DESTINATION lib
