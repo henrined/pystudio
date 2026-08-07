@@ -87,9 +87,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.tmpexpoapp"
+    namespace "com.pystudio.mobile"
     defaultConfig {
-        applicationId "com.tmpexpoapp"
+        applicationId "com.pystudio.mobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -196,7 +196,7 @@ android {
     }
     externalNativeBuild {
         cmake {
-            path "../../../core/CMakeLists.txt"
+            path "../../core/CMakeLists.txt"
             version "3.22.1"
         }
     }

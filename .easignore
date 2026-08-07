@@ -5,10 +5,9 @@ dist/
 web-build/
 expo-env.d.ts
 
-# Large runtime archives & C++ source/runtimes not needed for JS bundle
+# Large runtime archives (not needed for EAS build tarball)
 cpython-*.zip
 runtimes/
-core/
 android_old/
 mobile_old/
 
