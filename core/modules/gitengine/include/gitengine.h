@@ -3,7 +3,11 @@
 #include <string>
 #include <vector>
 #include <memory>
+#ifdef HAS_LIBGIT2
 #include <git2.h>
+#else
+struct git_repository;
+#endif
 
 namespace pystudio {
 namespace gitengine {
