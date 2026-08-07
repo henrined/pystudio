@@ -1,7 +1,20 @@
 {
   "expo": {
-    "name": "tmp_expo_app",
+    "name": "PyStudio Mobile",
     "slug": "tmp_expo_app",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "orientation": "default",
+    "userInterfaceStyle": "automatic",
+    "android": {
+      "package": "com.pystudio.mobile",
+      "adaptiveIcon": {
+        "backgroundColor": "#0A0A0F"
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f9b95c71-4924-444c-a5d8-9d6a938bd56c"
+      }
+    }
   }
 }

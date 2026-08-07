@@ -46,3 +46,5 @@ export const Typography: Record<string, TextStyle> = {
     fontWeight: '500',
   },
 };
+
+export default FontSizes;

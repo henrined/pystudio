@@ -14,16 +14,60 @@ interface ActivityItem {
 export const ActivityBar: React.FC = () => {
   const { activeTab, setActiveTab, theme, errorCount } = useAppStore();
 
-  const items: ActivityItem[] = [
-    { id: 'home', icon: 'home', label: 'Home' },
-    { id: 'explorer', icon: 'folder', label: 'Explorer' },
-    { id: 'search', icon: 'search', label: 'Search' },
-    { id: 'git', icon: 'git', label: 'Git' },
-    { id: 'debug', icon: 'bug', label: 'Debug', badgeCount: errorCount },
-    { id: 'marketplace', icon: 'extensions', label: 'Marketplace' },
-    { id: 'ai', icon: 'ai', label: 'AI Assistant' },
-    { id: 'settings', icon: 'settings', label: 'Settings' },
+  const mainItems: ActivityItem[] = [
+    { id: 'home', icon: 'home', label: 'Accueil' },
+    { id: 'explorer', icon: 'folder', label: 'Explorateur' },
+    { id: 'editor', icon: 'code', label: 'Éditeur' },
+    { id: 'search', icon: 'search', label: 'Recherche' },
+    { id: 'git', icon: 'git', label: 'Source Control' },
+    { id: 'debug', icon: 'bug', label: 'Débogage', badgeCount: errorCount },
+    { id: 'marketplace', icon: 'extensions', label: 'Extensions' },
+    { id: 'ai', icon: 'ai', label: 'IA Assistant' },
   ];
+
+  const bottomItems: ActivityItem[] = [
+    { id: 'settings', icon: 'settings', label: 'Paramètres' },
+  ];
+
+  const renderItem = (item: ActivityItem) => {
+    const isActive = activeTab === item.id;
+    return (
+      <TouchableOpacity
+        key={item.id}
+        activeOpacity={0.7}
+        onPress={() => setActiveTab(item.id)}
+        accessibilityRole="tab"
+        accessibilityLabel={item.label}
+        accessibilityState={{ selected: isActive }}
+        style={[
+          styles.item,
+          isActive && {
+            borderLeftColor: theme.colors.activityBarActiveBorder,
+            borderLeftWidth: 2,
+            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+          },
+        ]}
+      >
+        <Icon
+          name={item.icon}
+          size={24}
+          color={
+            isActive
+              ? theme.colors.activityBarForeground
+              : 'rgba(255, 255, 255, 0.5)'
+          }
+        />
+        {item.badgeCount ? (
+          <Badge
+            count={item.badgeCount}
+            backgroundColor={theme.colors.activityBarBadgeBackground}
+            textColor={theme.colors.activityBarBadgeForeground}
+            style={styles.badge}
+          />
+        ) : null}
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View
@@ -32,42 +76,13 @@ export const ActivityBar: React.FC = () => {
         { backgroundColor: theme.colors.activityBarBackground },
       ]}
     >
-      {items.map((item) => {
-        const isActive = activeTab === item.id;
-        return (
-          <TouchableOpacity
-            key={item.id}
-            activeOpacity={0.7}
-            onPress={() => setActiveTab(item.id)}
-            style={[
-              styles.item,
-              isActive && {
-                borderLeftColor: theme.colors.activityBarActiveBorder,
-                borderLeftWidth: 3,
-                backgroundColor: 'rgba(255, 255, 255, 0.05)',
-              },
-            ]}
-          >
-            <Icon
-              name={item.icon}
-              size={20}
-              color={
-                isActive
-                  ? theme.colors.activityBarForeground
-                  : 'rgba(255, 255, 255, 0.5)'
-              }
-            />
-            {item.badgeCount ? (
-              <Badge
-                count={item.badgeCount}
-                backgroundColor={theme.colors.activityBarBadgeBackground}
-                textColor={theme.colors.activityBarBadgeForeground}
-                style={styles.badge}
-              />
-            ) : null}
-          </TouchableOpacity>
-        );
-      })}
+      <View style={styles.mainItems}>
+        {mainItems.map(renderItem)}
+      </View>
+      <View style={styles.spacer} />
+      <View style={styles.bottomItems}>
+        {bottomItems.map(renderItem)}
+      </View>
     </View>
   );
 };
@@ -76,8 +91,20 @@ const styles = StyleSheet.create({
   container: {
     width: 48,
     height: '100%',
+    flexDirection: 'column',
     alignItems: 'center',
-    paddingVertical: 8,
+    paddingVertical: 4,
+  },
+  mainItems: {
+    width: '100%',
+    alignItems: 'center',
+  },
+  spacer: {
+    flex: 1,
+  },
+  bottomItems: {
+    width: '100%',
+    alignItems: 'center',
   },
   item: {
     width: 48,
@@ -85,7 +112,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    marginVertical: 2,
+    borderLeftWidth: 2,
+    borderLeftColor: 'transparent',
   },
   badge: {
     position: 'absolute',

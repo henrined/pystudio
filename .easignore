@@ -1,0 +1,54 @@
+# Dependencies & Build outputs
+node_modules/
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Large runtime archives & C++ source/runtimes not needed for JS bundle
+cpython-*.zip
+runtimes/
+core/
+android_old/
+mobile_old/
+
+# Documentation, Specifications & Design Mockups
+SRS_Blocks/
+PyStudio_Mobile_SRS.md
+maquettes/
+implementation_tree.md
+pystudio_fix_prompts.md
+fix_prompts/
+*.md
+
+# AI / Agent & Signing Configurations
+.agents/
+.claude/
+.gemini/
+.signing/
+skills-lock.json
+
+# Scripts & Helper Utilities
+scripts/
+split_srs.py
+update_ascii.py
+finish_expo_setup.sh
+setup_expo.sh
+
+# Native / Keys / Secrets
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.pem
+.env*.local
+
+# Metro & Debug logs
+.metro-health-check*
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+.DS_Store
+*.tsbuildinfo

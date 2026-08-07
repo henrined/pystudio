@@ -4,6 +4,7 @@ import { ThemeMode, Theme, getTheme } from '../theme';
 export type ActivityTab =
   | 'home'
   | 'explorer'
+  | 'editor'
   | 'search'
   | 'git'
   | 'debug'
@@ -24,6 +25,7 @@ export interface AppState {
   theme: Theme;
   activeTab: ActivityTab;
   isCommandPaletteOpen: boolean;
+  isKeyboardVisible: boolean;
   
   // Status Bar state
   gitBranch: string;
@@ -32,6 +34,9 @@ export interface AppState {
   currentLine: number;
   currentCol: number;
   activeLanguage: string;
+  encoding: string;
+  eolMode: string;
+  pythonVersion: string;
   
   // Open Editor Tabs
   openTabs: TabItem[];
@@ -42,6 +47,7 @@ export interface AppState {
   setActiveTab: (tab: ActivityTab) => void;
   toggleCommandPalette: () => void;
   setCommandPaletteOpen: (open: boolean) => void;
+  setKeyboardVisible: (visible: boolean) => void;
   setGitBranch: (branch: string) => void;
   setDiagnostics: (errors: number, warnings: number) => void;
   setCursorPosition: (line: number, col: number) => void;
@@ -55,8 +61,9 @@ export interface AppState {
 export const useAppStore = create<AppState>((set, get) => ({
   themeMode: 'dark',
   theme: getTheme('dark'),
-  activeTab: 'explorer',
+  activeTab: 'home',
   isCommandPaletteOpen: false,
+  isKeyboardVisible: false,
 
   gitBranch: 'main',
   errorCount: 0,
@@ -64,6 +71,9 @@ export const useAppStore = create<AppState>((set, get) => ({
   currentLine: 1,
   currentCol: 1,
   activeLanguage: 'Python',
+  encoding: 'UTF-8',
+  eolMode: 'LF',
+  pythonVersion: 'Python 3.11',
 
   openTabs: [],
   activeTabId: null,
@@ -80,6 +90,8 @@ export const useAppStore = create<AppState>((set, get) => ({
     set((state) => ({ isCommandPaletteOpen: !state.isCommandPaletteOpen })),
 
   setCommandPaletteOpen: (open: boolean) => set({ isCommandPaletteOpen: open }),
+
+  setKeyboardVisible: (visible: boolean) => set({ isKeyboardVisible: visible }),
 
   setGitBranch: (branch: string) => set({ gitBranch: branch }),
 
@@ -116,3 +128,5 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   setActiveFileTab: (id: string) => set({ activeTabId: id }),
 }));
+
+export default useAppStore;
