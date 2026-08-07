@@ -9,6 +9,11 @@ endif()
 
 set(PYTHON_RUNTIME_DIR "${CMAKE_SOURCE_DIR}/../runtimes/${ANDROID_ABI}")
 
+if(NOT EXISTS "${PYTHON_RUNTIME_DIR}/lib/libpython3.14.so")
+    message(WARNING "[pyembed] libpython3.14.so not found for ABI ${ANDROID_ABI} at ${PYTHON_RUNTIME_DIR}")
+    return()
+endif()
+
 target_include_directories(pyembed PUBLIC 
     include
     "${PYTHON_RUNTIME_DIR}/include/python3.14"

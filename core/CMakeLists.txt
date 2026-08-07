@@ -9,7 +9,7 @@ set(CMAKE_C_STANDARD 11)
 
 # ─── ABI Filters ──────────────────────────────────────────────────────────────
 if(ANDROID AND NOT CMAKE_ANDROID_ARCH_ABI)
-  set(CMAKE_ANDROID_ARCH_ABI "arm64-v8a;armeabi-v7a;x86_64" CACHE STRING "Android ABIs")
+  set(CMAKE_ANDROID_ARCH_ABI "arm64-v8a;x86_64" CACHE STRING "Android ABIs")
 endif()
 
 # ─── Build type ───────────────────────────────────────────────────────────────
@@ -21,10 +21,6 @@ endif()
 option(PYSTUDIO_BUILD_TESTS    "Build unit tests"               ON)
 option(PYSTUDIO_MODULE_PYEMBED "Build pyembed module"           ON)
 option(PYSTUDIO_ASAN           "Enable AddressSanitizer"        OFF)
-
-if(CMAKE_BUILD_TYPE MATCHES "Debug")
-  set(PYSTUDIO_ASAN ON)
-endif()
 
 # ─── Compiler warnings & hardening ────────────────────────────────────────────
 add_compile_options(

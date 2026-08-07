@@ -11,7 +11,10 @@ target_link_libraries(dbgbridge PUBLIC pystudio_core)
 target_compile_features(dbgbridge PUBLIC cxx_std_20)
 
 target_include_directories(dbgbridge_jni PRIVATE include)
-target_link_libraries(dbgbridge_jni PRIVATE dbgbridge pystudio_core pthread)
+target_link_libraries(dbgbridge_jni PRIVATE dbgbridge pystudio_core)
+if(NOT ANDROID)
+  target_link_libraries(dbgbridge_jni PRIVATE pthread)
+endif()
 
 install(TARGETS dbgbridge dbgbridge_jni
   LIBRARY DESTINATION lib
