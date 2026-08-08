@@ -262,7 +262,7 @@ class PyStudioDebugBridgeModule(private val reactContext: ReactApplicationContex
     }
 
     @ReactMethod
-    fun continue(threadId: Int, promise: Promise) {
+    fun `continue`(threadId: Int, promise: Promise) {
         scope.launch {
             try {
                 val service = getServiceOrReject(promise) ?: return@launch

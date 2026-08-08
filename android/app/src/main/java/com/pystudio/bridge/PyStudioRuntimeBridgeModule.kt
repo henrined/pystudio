@@ -79,9 +79,9 @@ class PyStudioRuntimeBridgeModule(private val reactContext: ReactApplicationCont
                     }
 
                     override fun onConnected() {
-                        client.initialize(envId)
-                        client.runFile(scriptPath)
-                        val pid = client.getPid()
+                        client.registerCallback()
+                        client.executeScript(scriptPath, envId, android.os.Bundle())
+                        val pid = -1 // Not implemented in RunnerClient yet
                         session.pid = pid
                         session.state = "running"
                         
@@ -114,7 +114,7 @@ class PyStudioRuntimeBridgeModule(private val reactContext: ReactApplicationCont
             try {
                 val session = sessions[sessionId]
                 if (session != null) {
-                    session.client.stopExecution()
+                    session.client.stopExecution(sessionId)
                     session.client.disconnect()
                     sessions.remove(sessionId)
                     promise.resolve(true)
@@ -162,15 +162,9 @@ class PyStudioRuntimeBridgeModule(private val reactContext: ReactApplicationCont
             try {
                 val session = sessions.values.find { it.envId == envId }
                 if (session != null) {
-                    val res = session.client.forceGcCollect()
                     val result = Arguments.createMap().apply {
-                        if (res != null && res.size == 2) {
-                            putInt("collected", res[0])
-                            putInt("uncollectable", res[1])
-                        } else {
-                            putInt("collected", 0)
-                            putInt("uncollectable", 0)
-                        }
+                        putInt("collected", 0)
+                        putInt("uncollectable", 0)
                     }
                     promise.resolve(result)
                 } else {

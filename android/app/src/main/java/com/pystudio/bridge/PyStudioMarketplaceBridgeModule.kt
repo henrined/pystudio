@@ -28,7 +28,7 @@ class PyStudioMarketplaceBridgeModule(private val reactContext: ReactApplication
                 val parsedFilters = filters?.let {
                     SearchFilters(
                         category = if (it.hasKey("category")) it.getString("category") else null,
-                        sortBy = if (it.hasKey("sortBy")) it.getString("sortBy") else null,
+                        sortBy = if (it.hasKey("sortBy")) it.getString("sortBy") ?: "relevance" else "relevance",
                         targetAbi = if (it.hasKey("targetAbi")) it.getString("targetAbi") else null,
                         pystudioVersion = if (it.hasKey("pystudioVersion")) it.getString("pystudioVersion") else null
                     )
@@ -43,7 +43,7 @@ class PyStudioMarketplaceBridgeModule(private val reactContext: ReactApplication
                     extMap.putString("displayName", ext.displayName)
                     extMap.putString("publisher", ext.publisher)
                     extMap.putString("version", ext.version)
-                    extMap.putInt("installs", ext.installs)
+                    extMap.putDouble("installs", ext.installs.toDouble())
                     extMap.putDouble("rating", ext.rating)
                     resultsArr.pushMap(extMap)
                 }

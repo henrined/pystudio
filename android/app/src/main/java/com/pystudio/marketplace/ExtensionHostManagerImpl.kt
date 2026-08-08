@@ -364,8 +364,7 @@ class ExtensionHostManagerImpl(
                 )
             }
         }
-
-        executeCommand(extensionId, "$apiNamespace.$method", args.values.toList())
+        executeCommand(extensionId, "$apiNamespace.$method", args.values.filterNotNull())
     }
 
     // -----------------------------------------------------------------------

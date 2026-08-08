@@ -370,6 +370,7 @@ data class UpdateResult(
     val previousVersion: String,
     val newVersion: String,
     val rolledBack: Boolean = false,
+    val rollbackAvailable: Boolean = false,
     val errorCode: String? = null
 )
 
@@ -527,17 +528,18 @@ interface ExtensionHostManagerService {
 }
 
 interface ExtensionLifecycleService {
-    suspend fun enable(extensionId: String)
-    suspend fun disable(extensionId: String)
+    suspend fun enable(extensionId: String): ExtensionStatus
+    suspend fun disable(extensionId: String): ExtensionStatus
     suspend fun updateExtension(extensionId: String, newVersion: String): UpdateResult
     suspend fun rollback(extensionId: String): RollbackResult
-    suspend fun getState(extensionId: String): ExtensionState
+    suspend fun getState(extensionId: String): ExtensionStatus?
     fun stateChangesFlow(): Flow<ExtensionStateChangeEvent>
 }
 
 interface PermissionManagerService {
     suspend fun checkPermission(extensionId: String, permission: String): Boolean
     suspend fun requestPermission(extensionId: String, permission: String, justification: String): Boolean
+    suspend fun grantPermission(extensionId: String, permission: String, justification: String)
     suspend fun revokePermission(extensionId: String, permission: String)
     suspend fun getGrants(extensionId: String): List<PermissionGrant>
 }
