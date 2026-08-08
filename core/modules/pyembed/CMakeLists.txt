@@ -1,6 +1,5 @@
-add_library(pyembed SHARED
-    src/pyembed.cpp
-)
+# ─── pyembed: CPython embedding ───────────────────────────────────────────────
+# Requires pre-built CPython runtime for the target ABI.
 
 # default ABI if not set
 if(NOT ANDROID_ABI)
@@ -10,9 +9,13 @@ endif()
 set(PYTHON_RUNTIME_DIR "${CMAKE_SOURCE_DIR}/../runtimes/${ANDROID_ABI}")
 
 if(NOT EXISTS "${PYTHON_RUNTIME_DIR}/lib/libpython3.14.so")
-    message(WARNING "[pyembed] libpython3.14.so not found for ABI ${ANDROID_ABI} at ${PYTHON_RUNTIME_DIR}")
+    message(STATUS "[pyembed] libpython3.14.so not found for ABI ${ANDROID_ABI} at ${PYTHON_RUNTIME_DIR} — skipping pyembed module")
     return()
 endif()
+
+add_library(pyembed SHARED
+    src/pyembed.cpp
+)
 
 target_include_directories(pyembed PUBLIC 
     include
