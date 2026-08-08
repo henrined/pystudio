@@ -1,21 +1,16 @@
-find_package(libgit2 QUIET)
+# ─── gitengine: libgit2 wrapper ───────────────────────────────────────────────
+# This module requires libgit2 headers and library to be pre-installed.
+# If not found, the module is silently skipped (CI-safe).
 
-if(NOT libgit2_FOUND)
-    include(FetchContent)
-    FetchContent_Declare(
-        libgit2
-        GIT_REPOSITORY https://github.com/libgit2/libgit2.git
-        GIT_TAG        v1.8.1
-        GIT_SHALLOW    TRUE
-    )
-    set(BUILD_SHARED_LIBS ON CACHE BOOL "" FORCE)
-    set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
-    set(BUILD_CLI OFF CACHE BOOL "" FORCE)
-    set(USE_SSH OFF CACHE BOOL "" FORCE)
-    set(USE_HTTPS OFF CACHE BOOL "" FORCE)
-    set(USE_BUNDLED_ZLIB ON CACHE BOOL "" FORCE)
-    FetchContent_MakeAvailable(libgit2)
+find_path(LIBGIT2_INCLUDE_DIR NAMES git2.h)
+find_library(LIBGIT2_LIBRARY NAMES git2)
+
+if(NOT LIBGIT2_INCLUDE_DIR OR NOT LIBGIT2_LIBRARY)
+    message(STATUS "[gitengine] libgit2 not found — skipping gitengine module")
+    return()
 endif()
+
+message(STATUS "[gitengine] libgit2 found: ${LIBGIT2_INCLUDE_DIR}, ${LIBGIT2_LIBRARY}")
 
 add_library(gitengine SHARED
     src/gitengine.cpp
@@ -23,7 +18,9 @@ add_library(gitengine SHARED
 )
 
 target_include_directories(gitengine PUBLIC include)
-target_link_libraries(gitengine PUBLIC pystudio_core git2)
+target_include_directories(gitengine PRIVATE ${LIBGIT2_INCLUDE_DIR})
+target_link_libraries(gitengine PUBLIC pystudio_core)
+target_link_libraries(gitengine PRIVATE ${LIBGIT2_LIBRARY})
 target_compile_definitions(gitengine PUBLIC HAS_LIBGIT2)
 
 install(TARGETS gitengine
